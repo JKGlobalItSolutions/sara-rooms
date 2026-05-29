@@ -223,3 +223,23 @@
   background-clip: text;
   color: transparent;
 }
+
+/* Header utilities */
+.font-display { font-family: var(--font-serif); }
+.glass { background: oklch(0.99 0.008 85 / 0.85); }
+.dark .glass { background: oklch(0.18 0.03 30 / 0.85); }
+.pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding: 0.5rem 1.5rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.pill-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px oklch(0.27 0.04 40 / 0.15);
+}
+.bg-primary-soft { background: oklch(0.93 0.04 75); }
+.dark .bg-primary-soft { background: oklch(0.30 0.06 30); }

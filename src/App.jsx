@@ -1,64 +1,31 @@
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { ScrollProgress } from "./components/ScrollProgress.jsx";
-import { MoonCountdown } from "./components/MoonCountdown.jsx";
-import { Header } from "./components/Header.jsx";
-import { Hero } from "./components/Hero.jsx";
-import { About } from "./components/About.jsx";
-import { Rooms } from "./components/Rooms.jsx";
-import { Gallery } from "./components/Gallery.jsx";
-import { Facilities } from "./components/Facilities.jsx";
-import { Location } from "./components/Location.jsx";
-import { Testimonials } from "./components/Testimonials.jsx";
-import { FAQ } from "./components/FAQ.jsx";
-import { Contact } from "./components/Contact.jsx";
-import { Footer } from "./components/Footer.jsx";
-import { StickyBook } from "./components/StickyBook.jsx";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "./index.css";
+import MainLayout from "./layouts/MainLayout.jsx";
+import Home from "./pages/Home.jsx";
+import About from "./pages/About.jsx";
+import Brands from "./pages/Brands.jsx";
+import Products from "./pages/Products.jsx";
+import Industries from "./pages/Industries.jsx";
+import Amenities from "./pages/Amenities.jsx";
+import Manufacturing from "./pages/Manufacturing.jsx";
+import Contact from "./pages/Contact.jsx";
 
-function ScrollToSection() {
-  const { hash } = useLocation();
-
-  useEffect(() => {
-    if (hash) {
-      const el = document.querySelector(hash);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    }
-  }, [hash]);
-
-  return null;
-}
-
-function HomePage() {
+export function App() {
   return (
-    <>
-      <Hero />
-      <About />
-      <Rooms />
-      <Gallery />
-      <Facilities />
-      <Location />
-      <Testimonials />
-      <FAQ />
-      <Contact />
-    </>
-  );
-}
-
-function App() {
-  return (
-    <div className="min-h-screen bg-background">
-      <ScrollProgress />
-      <MoonCountdown />
-      <Header />
-      <main>
-        <ScrollToSection />
-        <HomePage />
-      </main>
-      <Footer />
-      <StickyBook />
-    </div>
+    <BrowserRouter basename="/sara-rooms">
+      <Routes>
+        <Route element={<MainLayout />}>
+          <Route index element={<Home />} />
+          <Route path="about" element={<About />} />
+          <Route path="brands" element={<Brands />} />
+          <Route path="products" element={<Products />} />
+          <Route path="industries" element={<Industries />} />
+          <Route path="amenities" element={<Amenities />} />
+          {/* <Route path="manufacturing" element={<Manufacturing />} /> */}
+          <Route path="contact" element={<Contact />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

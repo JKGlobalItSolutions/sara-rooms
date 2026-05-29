@@ -1,125 +1,141 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { Moon, Sun, Phone, Menu, X } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { Menu, X } from "lucide-react";
 
-const links = [
-  { href: "#home", label: "Home" },
-  { href: "#about", label: "About" },
-  { href: "#rooms", label: "Rooms" },
-  { href: "#gallery", label: "Gallery" },
-  { href: "#facilities", label: "Facilities" },
-  { href: "#location", label: "Location" },
-  { href: "#contact", label: "Contact" },
+const navItems = [
+  { path: "/", label: "Home" },
+  { path: "/about", label: "About" },
+  { path: "/brands", label: "Brands" },
+  { path: "/products", label: "Products" },
+  { path: "/industries", label: "Industries" },
+  { path: "/amenities", label: "Amenities" },
+  // { path: "/manufacturing", label: "Infrastructure" },
 ];
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
-  const [dark, setDark] = useState(false);
   const [open, setOpen] = useState(false);
-  const { hash } = useLocation();
+  const location = useLocation();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30);
-    onScroll();
+    const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   useEffect(() => {
-    document.documentElement.classList.toggle("dark", dark);
-  }, [dark]);
-
-  const isActive = (href) => hash === href;
+    setOpen(false);
+  }, [location]);
 
   return (
     <header
-      className={`fixed top-1 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? "bg-background/85 backdrop-blur-md shadow-sm" : "bg-transparent"
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+        scrolled
+          ? "glass border-b border-border/60 py-3 shadow-sm backdrop-blur-xl"
+          : "bg-transparent py-5"
       }`}
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          <a
-            href="/sara-rooms/#home"
-            className="flex items-center gap-2 group"
-            onClick={(e) => {
-              e.preventDefault();
-              window.location.hash = "home";
-            }}
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
+        <Link to="/" className="flex items-center gap-2.5 group">
+          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground font-display text-lg transition-transform duration-300 group-hover:scale-105">
+            S
+          </span>
+          <span
+            className={`font-display text-lg leading-tight transition-colors duration-300 ${
+              scrolled ? "text-foreground" : "text-white drop-shadow"
+            }`}
           >
-            <span
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full text-primary-foreground font-serif text-lg font-bold shadow-md group-hover:scale-110 transition"
-              style={{ background: "var(--gradient-maroon)" }}
-            >
-              S
+            Sonachala
+            <span className="block text-[10px] uppercase tracking-[0.3em] opacity-70">
+              Hospitalities
             </span>
-            <span className="font-serif text-xl font-semibold">
-              Sara <span className="text-gold-gradient">Rooms</span>
-            </span>
-          </a>
+          </span>
+        </Link>
 
-          <nav className="hidden lg:flex items-center gap-7">
-            {links.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                className={`text-sm font-medium transition-colors ${
-                  isActive(l.href)
-                    ? "text-primary"
-                    : "text-foreground/85 hover:text-primary"
+        <nav className="hidden items-center gap-1 lg:flex">
+          {navItems.map((item) => {
+            const isActive = location.pathname === item.path;
+            return (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                  isActive
+                    ? scrolled
+                      ? "text-primary bg-primary-soft/80"
+                      : "text-white bg-white/15"
+                    : scrolled
+                      ? "text-foreground/70 hover:text-primary hover:bg-primary-soft/50"
+                      : "text-white/80 hover:text-white hover:bg-white/10"
                 }`}
               >
-                {l.label}
-              </a>
-            ))}
-          </nav>
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
 
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setDark((d) => !d)}
-              aria-label="Toggle night mode"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background/60 hover:bg-secondary transition"
-            >
-              {dark ? <Sun className="h-4 w-4 text-accent" /> : <Moon className="h-4 w-4" />}
-            </button>
-            <a
-              href="tel:+919999999999"
-              className="hidden sm:inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-primary-foreground shadow-md hover:shadow-lg transition"
-              style={{ background: "var(--gradient-maroon)" }}
-            >
-              <Phone className="h-4 w-4" /> Call
-            </a>
-            <button
-              onClick={() => setOpen((o) => !o)}
-              className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-full border border-border"
-              aria-label="Menu"
-            >
-              {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </button>
-          </div>
+        <div className="hidden items-center gap-3 lg:flex">
+          <Link
+            to="/contact"
+            className={`pill-btn text-sm ${
+              scrolled
+                ? "bg-primary text-primary-foreground"
+                : "bg-white text-primary hover:bg-white/90"
+            }`}
+          >
+            Enquire Now
+          </Link>
         </div>
 
-        {open && (
-          <div className="lg:hidden pb-4 animate-in fade-in slide-in-from-top-2 duration-300">
-            <div className="rounded-2xl border border-border bg-background/95 backdrop-blur p-4 shadow-lg">
-              {links.map((l) => (
-                <a
-                  key={l.href}
-                  href={l.href}
+        <button
+          aria-label="Menu"
+          onClick={() => setOpen((v) => !v)}
+          className={`lg:hidden rounded-full p-2.5 transition-colors ${
+            scrolled
+              ? "text-foreground hover:bg-primary-soft/50"
+              : "text-white hover:bg-white/10"
+          }`}
+        >
+          {open ? <X size={22} /> : <Menu size={22} />}
+        </button>
+
+        {/* Mobile menu */}
+        <div
+          className={`fixed inset-0 top-0 z-40 bg-background/95 backdrop-blur-lg transition-all duration-400 lg:hidden ${
+            open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          }`}
+        >
+          <div className="flex flex-col items-center justify-center h-full gap-6 px-6">
+            {navItems.map((item) => {
+              const isActive = location.pathname === item.path;
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
                   onClick={() => setOpen(false)}
-                  className={`block py-2 text-sm font-medium transition-colors ${
-                    isActive(l.href)
+                  className={`text-2xl font-display transition-all duration-300 ${
+                    isActive
                       ? "text-primary"
-                      : "hover:text-primary"
+                      : "text-foreground/60 hover:text-primary"
                   }`}
                 >
-                  {l.label}
-                </a>
-              ))}
-            </div>
+                  {item.label}
+                </Link>
+              );
+            })}
+            <Link
+              to="/contact"
+              onClick={() => setOpen(false)}
+              className="mt-6 pill-btn bg-primary text-primary-foreground text-lg px-10 py-4"
+            >
+              Enquire Now
+            </Link>
           </div>
-        )}
+        </div>
       </div>
     </header>
   );
 }
+
+export default Header;
