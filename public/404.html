@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="refresh" content="0;url=/sara-rooms/">
   <script>
-    // Preserve the hash portion for HashRouter to handle routing
+    // Redirect to the root of the app, preserving the hash for HashRouter
     var redirect = "/sara-rooms/" + window.location.hash + window.location.search;
     window.location.replace(redirect);
   </script>
