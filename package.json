@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "predeploy": "npm run build && copy dist\\index.html dist\\404.html",
+    "predeploy": "npm run build && node -e \"require('fs').copyFileSync('dist/index.html', 'dist/404.html')\"",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
@@ -17,7 +17,7 @@
     "lucide-react": "^0.575.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-router-dom": "^7.16.0",
+    "react-router-dom": "^6.30.3",
     "tailwind-merge": "^3.5.0",
     "zod": "^3.24.2"
   },

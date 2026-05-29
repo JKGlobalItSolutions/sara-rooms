@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="refresh" content="0;url=/sara-rooms/">
-    <script>
-      window.location.replace("/sara-rooms/" + window.location.hash + window.location.search);
-    </script>
-  </head>
-  <body>
-    <p>Redirecting to <a href="/sara-rooms/">Sara Rooms</a>...</p>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="refresh" content="0;url=/sara-rooms/">
+  <script>
+    // Preserve the hash portion for HashRouter to handle routing
+    var redirect = "/sara-rooms/" + window.location.hash + window.location.search;
+    window.location.replace(redirect);
+  </script>
+</head>
+<body>
+  <p>Redirecting to <a href="/sara-rooms/">Sara Rooms</a>...</p>
+</body>
 </html>
