@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import MainLayout from "./layouts/MainLayout.jsx";
 import Home from "./pages/Home.jsx";
@@ -12,7 +12,7 @@ import Contact from "./pages/Contact.jsx";
 
 export function App() {
   return (
-    <BrowserRouter basename="/sara-rooms">
+    <HashRouter>
       <Routes>
         <Route element={<MainLayout />}>
           <Route index element={<Home />} />
@@ -25,7 +25,7 @@ export function App() {
           <Route path="contact" element={<Contact />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
