@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Moon, Sun, Phone, Menu, X } from "lucide-react";
 
 const links = [
@@ -15,6 +16,7 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [dark, setDark] = useState(false);
   const [open, setOpen] = useState(false);
+  const { hash } = useLocation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
@@ -27,6 +29,8 @@ export function Header() {
     document.documentElement.classList.toggle("dark", dark);
   }, [dark]);
 
+  const isActive = (href) => hash === href;
+
   return (
     <header
       className={`fixed top-1 left-0 right-0 z-50 transition-all duration-500 ${
@@ -35,7 +39,14 @@ export function Header() {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          <a href="#home" className="flex items-center gap-2 group">
+          <a
+            href="/sara-rooms/#home"
+            className="flex items-center gap-2 group"
+            onClick={(e) => {
+              e.preventDefault();
+              window.location.hash = "home";
+            }}
+          >
             <span
               className="inline-flex h-9 w-9 items-center justify-center rounded-full text-primary-foreground font-serif text-lg font-bold shadow-md group-hover:scale-110 transition"
               style={{ background: "var(--gradient-maroon)" }}
@@ -49,7 +60,15 @@ export function Header() {
 
           <nav className="hidden lg:flex items-center gap-7">
             {links.map((l) => (
-              <a key={l.href} href={l.href} className="story-link text-sm font-medium text-foreground/85 hover:text-primary">
+              <a
+                key={l.href}
+                href={l.href}
+                className={`text-sm font-medium transition-colors ${
+                  isActive(l.href)
+                    ? "text-primary"
+                    : "text-foreground/85 hover:text-primary"
+                }`}
+              >
                 {l.label}
               </a>
             ))}
@@ -88,7 +107,11 @@ export function Header() {
                   key={l.href}
                   href={l.href}
                   onClick={() => setOpen(false)}
-                  className="block py-2 text-sm font-medium hover:text-primary"
+                  className={`block py-2 text-sm font-medium transition-colors ${
+                    isActive(l.href)
+                      ? "text-primary"
+                      : "hover:text-primary"
+                  }`}
                 >
                   {l.label}
                 </a>

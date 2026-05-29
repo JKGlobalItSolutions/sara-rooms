@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting...</title>
+    <script>
+      // GitHub Pages SPA fallback — redirect page requests to index.html
+      // This handles direct URL access and refresh on routes
+      const segmentCount = 1; // /sara-rooms/ is the base path, 1 segment
+      const pathArr = window.location.pathname.split("/").filter(Boolean);
+      const rest = pathArr.slice(segmentCount).join("/");
+      const search = window.location.search;
+      const hash = window.location.hash;
+      window.location.replace(
+        "/sara-rooms/" + (rest ? "?" + search + hash : "")
+      );
+    </script>
+  </head>
+  <body>
+    <p>Redirecting to application... If you are not redirected,
+      <a href="/sara-rooms/">click here</a>.
+    </p>
+  </body>
+</html>

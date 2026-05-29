@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { ScrollProgress } from "./components/ScrollProgress.jsx";
 import { MoonCountdown } from "./components/MoonCountdown.jsx";
 import { Header } from "./components/Header.jsx";
@@ -13,6 +15,37 @@ import { Contact } from "./components/Contact.jsx";
 import { Footer } from "./components/Footer.jsx";
 import { StickyBook } from "./components/StickyBook.jsx";
 
+function ScrollToSection() {
+  const { hash } = useLocation();
+
+  useEffect(() => {
+    if (hash) {
+      const el = document.querySelector(hash);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  }, [hash]);
+
+  return null;
+}
+
+function HomePage() {
+  return (
+    <>
+      <Hero />
+      <About />
+      <Rooms />
+      <Gallery />
+      <Facilities />
+      <Location />
+      <Testimonials />
+      <FAQ />
+      <Contact />
+    </>
+  );
+}
+
 function App() {
   return (
     <div className="min-h-screen bg-background">
@@ -20,15 +53,8 @@ function App() {
       <MoonCountdown />
       <Header />
       <main>
-        <Hero />
-        <About />
-        <Rooms />
-        <Gallery />
-        <Facilities />
-        <Location />
-        <Testimonials />
-        <FAQ />
-        <Contact />
+        <ScrollToSection />
+        <HomePage />
       </main>
       <Footer />
       <StickyBook />
